@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "demo": "ng serve demo",
-    "build-demo": "ng build demo"
+    "build-demo": "ng build demo --baseHref=/angular-double-scroll/ --prod=true"
   },
   "private": true,
   "dependencies": {
