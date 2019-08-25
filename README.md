@@ -1,4 +1,9 @@
-# AngularDoubleScroll
+# Angular double scroll
+
+[![Build Status](https://api.travis-ci.com/bastienmoulia/angular-double-scroll.svg?branch=master)](https://travis-ci.com/bastienmoulia/angular-double-scroll)
+[![Known Vulnerabilities](https://snyk.io/test/github/bastienmoulia/angular-double-scroll/badge.svg)](https://snyk.io/test/github/bastienmoulia/angular-double-scroll)
+[![Dependencies](https://david-dm.org/bastienmoulia/angular-double-scroll/status.svg)](https://david-dm.org/bastienmoulia/angular-double-scroll)
+[![Dev Dependencies](https://david-dm.org/bastienmoulia/angular-double-scroll/dev-status.svg)](https://david-dm.org/bastienmoulia/angular-double-scroll?type=dev)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.
 
