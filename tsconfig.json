@@ -19,12 +19,6 @@
       "dom"
     ],
     "paths": {
-      "lib": [
-        "dist/lib"
-      ],
-      "lib/*": [
-        "dist/lib/*"
-      ],
       "angular-double-scroll": [
         "dist/angular-double-scroll"
       ],

@@ -1,9 +1,31 @@
 <h1>Angular double scroll</h1>
-
+<h2>Exemple</h2>
+<h3>Input</h3>
 <textarea [(ngModel)]="content"></textarea>
-
+<h3>Result</h3>
 <div class="box">
   <double-scroll>
-    <pre>{{content}}</pre>
+    <pre>{{ content }}</pre>
   </double-scroll>
 </div>
+<h2>Install</h2>
+<code>npm install angular-double-scroll</code>
+<h2>Usage</h2>
+<h3>Import</h3>
+<code><pre>
+import &#123; AngularDoubleScrollModule &#125; from 'angular-double-scroll';
+
+@NgModule(&#123;
+  ...
+  imports: [
+    ...
+    AngularDoubleScrollModule
+  ]
+&#125;)
+</pre></code>
+<h3>Template</h3>
+<code><pre>
+&lt;double-scroll&gt;
+  &lt;!-- Long content--&gt;
+&lt;/double-scroll&gt;
+</pre></code>

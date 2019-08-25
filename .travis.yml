@@ -1,0 +1,25 @@
+language: node_js
+node_js:
+  - "12"
+dist: trusty
+sudo: false
+
+branches:
+  only:
+  - master
+
+cache:
+  directories:
+    - node_modules
+
+script:
+  - npm run build-demo
+  - mv dist/demo/index.html dist/demo/404.html
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/demo
+  on:
+    branch: master
