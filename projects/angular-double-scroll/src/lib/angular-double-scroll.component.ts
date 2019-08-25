@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, OnDestroy, AfterViewInit, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ContentObserver } from '@angular/cdk/observers';
 
@@ -6,9 +6,10 @@ import { ContentObserver } from '@angular/cdk/observers';
   selector: 'double-scroll',
   template: `
     <div [ngStyle]="{'overflow-x': overflow}" (scroll)="scrollTop($event)" id="ngds-scroll-top">
-      <div [ngStyle]="{'height': height + 'px'}"></div>
+      <div [ngStyle]="{'height': scrollSize + 'px'}"></div>
     </div>
-    <div [ngStyle]="{'overflow-x': overflow, 'height': '100%'}" (scroll)="scrollContent($event)" id="ngds-content">
+    <div [ngStyle]="{'overflow-x': overflow, 'height': 'calc(100% - ' + scrollSize + 'px)'}"
+    (scroll)="scrollContent($event)" id="ngds-content">
       <div style="display: inline-block;" #element>
         <ng-content></ng-content>
       </div>
@@ -16,16 +17,24 @@ import { ContentObserver } from '@angular/cdk/observers';
   `,
   styles: []
 })
-export class AngularDoubleScrollComponent implements OnDestroy, AfterViewInit {
+export class AngularDoubleScrollComponent implements OnDestroy, AfterViewInit, OnInit {
 
+  /** CSS overflow propertie */
   @Input() overflow: 'auto' | 'scroll' = 'auto';
+  /** Size of the scroll bar in px */
+  @Input() scrollSize;
   @ViewChild('element', {static: true}) element: ElementRef;
   dataChanges: Subscription = null;
-  height = 1;
 
   constructor(
     private contentObserver: ContentObserver
   ) { }
+
+  ngOnInit() {
+    if (!this.scrollSize) {
+      this.scrollSize = this.getScrollbarWidth();
+    }
+  }
 
   ngAfterViewInit() {
     this.resize();
@@ -35,7 +44,7 @@ export class AngularDoubleScrollComponent implements OnDestroy, AfterViewInit {
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.dataChanges.unsubscribe();
   }
 
@@ -50,6 +59,29 @@ export class AngularDoubleScrollComponent implements OnDestroy, AfterViewInit {
 
   scrollContent(event: { target: HTMLInputElement; }) {
     document.querySelector('#ngds-scroll-top').scrollLeft = event.target.scrollLeft;
+  }
+
+
+  getScrollbarWidth(): number {
+
+    // Creating invisible container
+    const outer = document.createElement('div');
+    outer.style.visibility = 'hidden';
+    outer.style.overflow = 'scroll'; // forcing scrollbar to appear
+    outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+    document.body.appendChild(outer);
+
+    // Creating inner element and placing it in the container
+    const inner = document.createElement('div');
+    outer.appendChild(inner);
+
+    // Calculating difference between container's full width and the child width
+    const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
+
+    // Removing temporary elements from the DOM
+    outer.parentNode.removeChild(outer);
+
+    return scrollbarWidth || 15;
   }
 
 }
