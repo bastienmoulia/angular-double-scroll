@@ -1,6 +1,13 @@
 {
   "name": "angular-double-scroll",
-  "version": "0.0.1",
+  "version": "0.0.3",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bastienmoulia/angular-double-scroll.git"
+  },
+  "keywords": ["angular", "scroll", "scrollbar", "scrollbars", "top", "double"],
+  "homepage": "https://github.com/bastienmoulia/angular-double-scroll",
   "peerDependencies": {
     "@angular/common": "^8.2.0",
     "@angular/core": "^8.2.0"

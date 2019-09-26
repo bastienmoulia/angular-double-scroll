@@ -10,7 +10,7 @@ import { ContentObserver } from '@angular/cdk/observers';
     </div>
     <div [ngStyle]="{'overflow-x': overflow, 'height': 'calc(100% - ' + scrollSize + 'px)'}"
     (scroll)="scrollContent($event)" id="ngds-content">
-      <div style="display: inline-block;" #element>
+      <div style="display: inline-block; min-width: 100%;" #element>
         <ng-content></ng-content>
       </div>
     </div>
