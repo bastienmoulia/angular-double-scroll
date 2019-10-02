@@ -12,6 +12,7 @@ text
 with
 loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong
 line`;
+  onlyOne = false;
 
   constructor() {}
 }

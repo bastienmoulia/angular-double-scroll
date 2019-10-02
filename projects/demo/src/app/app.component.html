@@ -1,18 +1,25 @@
-<h1>Angular double scroll</h1>
-<h2>Exemple</h2>
-<h3>Input</h3>
-<textarea [(ngModel)]="content"></textarea>
-<h3>Result</h3>
-<div class="box">
-  <double-scroll>
-    <pre>{{ content }}</pre>
-  </double-scroll>
-</div>
-<h2>Install</h2>
-<code>npm install angular-double-scroll</code>
-<h2>Usage</h2>
-<h3>Import</h3>
-<code><pre>
+<div class="container">
+  <h1>Angular double scroll</h1>
+  <h2>Exemple</h2>
+  <h3>Input</h3>
+  <div class="form-group">
+    <textarea [(ngModel)]="content" class="form-control"></textarea>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" [(ngModel)]="onlyOne" id="onlyOne">
+    <label class="form-check-label" for="onlyOne">Only one bar</label>
+  </div>
+  <h3>Result</h3>
+  <div class="box">
+    <double-scroll [onlyOne]="onlyOne">
+      <pre>{{ content }}</pre>
+    </double-scroll>
+  </div>
+  <h2>Install</h2>
+  <pre><code>npm install angular-double-scroll</code></pre>
+  <h2>Usage</h2>
+  <h3>Import</h3>
+  <pre><code>
 import &#123; AngularDoubleScrollModule &#125; from 'angular-double-scroll';
 
 @NgModule(&#123;
@@ -22,10 +29,11 @@ import &#123; AngularDoubleScrollModule &#125; from 'angular-double-scroll';
     AngularDoubleScrollModule
   ]
 &#125;)
-</pre></code>
-<h3>Template</h3>
-<code><pre>
+  </code></pre>
+  <h3>Template</h3>
+  <pre><code>
 &lt;double-scroll&gt;
   &lt;!-- Long content--&gt;
 &lt;/double-scroll&gt;
-</pre></code>
+  </code></pre>
+</div>

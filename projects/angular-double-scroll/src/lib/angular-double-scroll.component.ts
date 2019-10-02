@@ -1,11 +1,10 @@
-import { Component, Input, ViewChild, ElementRef, OnDestroy, AfterViewInit, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ContentObserver } from '@angular/cdk/observers';
 
 @Component({
   selector: 'double-scroll',
   template: `
-    <div [ngStyle]="{'overflow-x': overflow}" (scroll)="scrollTop($event)" id="ngds-scroll-top">
+    <div [ngStyle]="{'overflow-x': overflow}" (scroll)="scrollTop($event)" id="ngds-scroll-top" *ngIf="!onlyOne">
       <div [ngStyle]="{'height': scrollSize + 'px'}"></div>
     </div>
     <div [ngStyle]="{'overflow-x': overflow, 'height': 'calc(100% - ' + scrollSize + 'px)'}"
@@ -17,17 +16,19 @@ import { ContentObserver } from '@angular/cdk/observers';
   `,
   styles: []
 })
-export class AngularDoubleScrollComponent implements OnDestroy, AfterViewInit, OnInit {
+export class AngularDoubleScrollComponent implements OnInit, AfterViewChecked {
 
   /** CSS overflow propertie */
   @Input() overflow: 'auto' | 'scroll' = 'auto';
   /** Size of the scroll bar in px */
-  @Input() scrollSize;
+  @Input() scrollSize: number;
+  /** Option to show only one scrollbar */
+  @Input() onlyOne = false;
   @ViewChild('element', {static: true}) element: ElementRef;
   dataChanges: Subscription = null;
 
   constructor(
-    private contentObserver: ContentObserver
+    private hostElement: ElementRef
   ) { }
 
   ngOnInit() {
@@ -36,33 +37,27 @@ export class AngularDoubleScrollComponent implements OnDestroy, AfterViewInit, O
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewChecked() {
     this.resize();
-    this.dataChanges = this.contentObserver.observe(this.element.nativeElement)
-      .subscribe((event: MutationRecord[]) => {
-        this.resize();
-    });
   }
 
-  ngOnDestroy() {
-    this.dataChanges.unsubscribe();
-  }
-
-  resize() {
-    const width = document.querySelector('#ngds-content>div').clientWidth;
-    (document.querySelector('#ngds-scroll-top>div') as HTMLElement).style.width = `${width}px`;
+  private resize() {
+    const width = this.element.nativeElement.clientWidth;
+    const scrollTopDiv = this.hostElement.nativeElement.querySelector('#ngds-scroll-top>div');
+    if (scrollTopDiv) {
+      scrollTopDiv.style.width = `${width}px`;
+    }
   }
 
   scrollTop(event: { target: HTMLInputElement; }) {
-    document.querySelector('#ngds-content').scrollLeft = event.target.scrollLeft;
+    this.hostElement.nativeElement.querySelector('#ngds-content').scrollLeft = event.target.scrollLeft;
   }
 
   scrollContent(event: { target: HTMLInputElement; }) {
-    document.querySelector('#ngds-scroll-top').scrollLeft = event.target.scrollLeft;
+    this.hostElement.nativeElement.querySelector('#ngds-scroll-top').scrollLeft = event.target.scrollLeft;
   }
 
-
-  getScrollbarWidth(): number {
+  private getScrollbarWidth(): number {
 
     // Creating invisible container
     const outer = document.createElement('div');
