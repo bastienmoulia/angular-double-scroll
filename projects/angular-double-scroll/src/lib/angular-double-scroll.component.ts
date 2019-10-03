@@ -54,7 +54,10 @@ export class AngularDoubleScrollComponent implements OnInit, AfterViewChecked {
   }
 
   scrollContent(event: { target: HTMLInputElement; }) {
-    this.hostElement.nativeElement.querySelector('#ngds-scroll-top').scrollLeft = event.target.scrollLeft;
+    const scrollTop = this.hostElement.nativeElement.querySelector('#ngds-scroll-top');
+    if (scrollTop) {
+      scrollTop.scrollLeft = event.target.scrollLeft;
+    }
   }
 
   private getScrollbarWidth(): number {
